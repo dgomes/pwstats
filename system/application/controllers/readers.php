@@ -6,7 +6,9 @@ class Readers extends Controller {
             parent::Controller();
             $this->load->library('tank_auth');
 	    if ($this->tank_auth->is_logged_in())
-            	$this->load->scaffolding('readers');
+		    $this->load->scaffolding('readers');
+	    else
+		    redirect('/auth/login', 'refresh');
        }
 }
 ?>
