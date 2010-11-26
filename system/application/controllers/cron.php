@@ -13,7 +13,14 @@ class Cron extends Controller {
 	       foreach($readers->result() as $row) {
 		       $this->db->select('plugin');
 		       $model = $this->db->get_where('models',array('id' => $row->models_id))->result();
-		       fopen(site_url("plugins/".$model[0]->plugin."/read/".$row->id),'r');
+			   if(file_exists("plugins/"+$model[0]->plugin+".php"))
+			   {
+				   include_once("plugins"+$model[0]->plugin+".php");
+				   if(function_exists($model[0]->plugin+".read"))
+				   {
+						$ret = call_user_func($model[0]->plugin+".read",$model[0]->id);
+				   }
+			   }
 	       }
        }
 }
