@@ -14,7 +14,6 @@ class Imeterbox extends Controller {
 	function read($readers_id) {
 		$reader = $this->db->get_where('readers', array('id' => $readers_id))->result();
 		$data = $this->_parse_imeter($reader[0]->url);
-		print_r($data);	
 		$query = $this->db->get('value_types');
 		$type = array();
 		foreach ($query->result() as $row)
