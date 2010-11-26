@@ -12,16 +12,22 @@ class Cron extends Controller {
 	       $readers = $this->db->get('readers');
 	       foreach($readers->result() as $row) {
 		       $this->db->select('plugin');
-		       $model = $this->db->get_where('models',array('id' => $row->models_id))->result();
+			   $model = $this->db->get_where('models',array('id' => $row->models_id))->result();
+			   
 			   if(file_exists("plugins/"+$model[0]->plugin+".php"))
 			   {
 				   include_once("plugins"+$model[0]->plugin+".php");
 				   if(function_exists($model[0]->plugin+".read"))
 				   {
 						$ret = call_user_func($model[0]->plugin+".read",$model[0]->id);
+				   }else
+				   {
+						echo "Could not load plugin<br />";
 				   }
+			   }else{
+					echo "Could not find plugin: ".$model[0]->plugin."<br />";
 			   }
-	       }
+			}
        }
 }
 ?>
