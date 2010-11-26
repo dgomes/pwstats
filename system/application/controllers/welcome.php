@@ -13,7 +13,7 @@ class Welcome extends Controller
 	function index()
 	{
 		if (!$this->tank_auth->is_logged_in()) {
-			$this->load->view('welcome_message', $data);
+			$this->load->view('welcome_message');
 		} else {
 			$data['user_id']	= $this->tank_auth->get_user_id();
 			$data['username']	= $this->tank_auth->get_username();
