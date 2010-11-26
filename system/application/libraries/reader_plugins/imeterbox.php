@@ -1,4 +1,5 @@
-<?php
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+
 class Imeterbox {
 
 	function index() {
@@ -6,20 +7,20 @@ class Imeterbox {
 	}
 
 	function read($readers_id) {
-		$reader = $this->db->get_where('readers', array('id' => $readers_id))->result();
+		$reader = $db->get_where('readers', array('id' => $readers_id))->result();
 		$data = $this->_parse_imeter($reader[0]->url);
-		$query = $this->db->get('entries_types');
+		$query = $db->get('entries_types');
 		$type = array();
 		foreach ($query->result() as $row)
 			$type[$row->name] = $row->id;
 
 		foreach($data['measure'] as $val_type => $val)
 			if(array_key_exists($val_type,$type)) {
-				$this->db->set('readers_id', (int) $readers_id);
-				$this->db->set('entry', $val);
-				$this->db->set('entries_types_id', $type[$val_type]);
-				$this->db->set('unit_timestamp', $data['timestamp']);
-				$this->db->insert('entries');
+				$db->set('readers_id', (int) $readers_id);
+				$db->set('entry', $val);
+				$db->set('entries_types_id', $type[$val_type]);
+				$db->set('unit_timestamp', $data['timestamp']);
+				$db->insert('entries');
 			}
 	}
 
