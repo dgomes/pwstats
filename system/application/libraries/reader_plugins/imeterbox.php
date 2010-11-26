@@ -6,7 +6,7 @@ class Imeterbox {
 		echo "ISA iMeterBor plugin";
 	}
 
-	function read($readers_id) {
+	function read($db,$readers_id) {
 		$reader = $db->get_where('readers', array('id' => $readers_id))->result();
 		$data = $this->_parse_imeter($reader[0]->url);
 		$query = $db->get('entries_types');
