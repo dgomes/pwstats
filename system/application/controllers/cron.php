@@ -15,14 +15,11 @@ class Cron extends Controller {
 			   	$this->db->select('plugin');
 			   	$model = $this->db->get_where('models',array('id' => $row->models_id))->result();
 
-				if(!function_exists($model[0]->plugin+".read"))
-				{
-					$this->load->library("reader_plugins/".$model[0]->plugin);
-			   	}
+				$this->load->library("reader_plugins/".$model[0]->plugin);
 
-				if(function_exists($model[0]->plugin+".read"))
+				if(method_exists($model[0]->plugin,"read"))
 				{
-						$ret = call_user_func($model[0]->plugin+".read",$model[0]->id);
+						$ret = call_user_func(array($model[0]->plugin,"read"),$model[0]->id);
 				}else
 				{
 						echo "Could not load plugin: ".$model[0]->plugin."<br />";
