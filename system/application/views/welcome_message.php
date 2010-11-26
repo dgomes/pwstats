@@ -45,7 +45,7 @@ code {
 
 <h1>PWStats</h1>
 
-<p>Comming Soon...</p>
+<p>Coming Soon...</p>
 
 </body>
 </html>
