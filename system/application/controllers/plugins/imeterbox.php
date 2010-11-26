@@ -14,12 +14,12 @@ class Imeterbox extends Controller {
 	function read($readers_id) {
 		$reader = $this->db->get_where('readers', array('id' => $readers_id))->result();
 		$data = $this->_parse_imeter($reader[0]->url);
-		$query = $this->db->get('entry_types');
+		$query = $this->db->get('entries_types');
 		$type = array();
 		foreach ($query->result() as $row)
 			$type[$row->name] = $row->id;
 
-		foreach($data['measure'] as $val_type => $val) 
+		foreach($data['measure'] as $val_type => $val)
 			if(array_key_exists($val_type,$type)) {
 				$this->db->set('readers_id', (int) $readers_id);
 				$this->db->set('entry', $val);
@@ -49,7 +49,7 @@ class Imeterbox extends Controller {
 		$time = $s->body->div->div[2]->table[1]->tbody->tr[3]->td[1];
 		$timestamp = str_replace(":","*",$time); //in accordance with http://dev.mysql.com/doc/refman/5.0/en/datetime.html formats '98/12/31 11*30*45'
 
-		return array('measure' => $measure, 'timestamp' => $timestamp); 
+		return array('measure' => $measure, 'timestamp' => $timestamp);
 	}
 
 }
