@@ -47,5 +47,6 @@ code {
 
 <p>Coming Soon...</p>
 
+<h5><?=anchor('auth/login', 'title="Beta Users Login"')?></h5>
 </body>
 </html>
