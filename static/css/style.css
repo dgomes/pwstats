@@ -59,7 +59,7 @@ img {
 	font-weight: bold;
 	text-decoration: none;
 	border: none; 
-	background: url(images/button_01.png) no-repeat;
+	background: url(/static/images/button_01.png) no-repeat;
 }
 
 .rc_btn_02 a {
@@ -75,7 +75,7 @@ img {
 	font-weight: bold;
 	text-decoration: none;
 	border: none; 
-	background: url(images/button_02.jpg) no-repeat;
+	background: url(/static/images/button_02.jpg) no-repeat;
 }
 
 .header_01 {
@@ -102,7 +102,7 @@ img {
 #header_wrapper {
 	width: 100%;
 	margin: 0 auto;
-	background: url(images/header_bg.jpg) repeat-x;
+	background: url(/static/images/header_bg.jpg) repeat-x;
 }
 
 #header {
@@ -116,7 +116,7 @@ img {
 	float: left;
 	width: 300px;
 	height: 48px;
-	background: url(images/logo.jpg) left top no-repeat;
+	background: url(/static/images/logo.jpg) left top no-repeat;
 }
 
 /* menu */
@@ -155,7 +155,7 @@ img {
 #menu li a:hover, #menu li .current {
 	position: relative;
 	color: #000;
-	background: url(images/menu_hover_right.jpg) bottom right no-repeat;
+	background: url(/static/images/menu_hover_right.jpg) bottom right no-repeat;
 }
 
 #menu li a:hover span, #menu li .current span	{
@@ -165,7 +165,7 @@ img {
 	height: 48px;
 	bottom: 0px;
 	left: -7px;
-	background: url(images/menu_hover_left.jpg) left bottom no-repeat;
+	background: url(/static/images/menu_hover_left.jpg) left bottom no-repeat;
 }
 
 /* end of menu */
@@ -182,7 +182,7 @@ img {
 	width: 980px;
 	height: 265px;
 	margin: 0 auto;
-	background: #ffffff url(images/banner_bg.jpg) no-repeat;
+	background: #ffffff url(/static/images/banner_bg.jpg) no-repeat;
 }
 
 #banner #banner_content {
@@ -209,7 +209,7 @@ img {
 	width: 100%;
 	height: 220px;
 	margin: 0 auto;
-	background: url(images/content_top_bg.jpg) repeat-x;
+	background: url(/static/images/content_top_bg.jpg) repeat-x;
 }
 
 #content_top {
@@ -270,7 +270,7 @@ img {
 	position: relative;
 	width: 441px;
 	height: 170px;
-	background: url(images/frame_01.png) no-repeat;
+	background: url(/static/images/frame_01.png) no-repeat;
 }
 
 .image_wrapper_01 img {
@@ -288,7 +288,7 @@ img {
 .section_w140 .project_icon {
 	width: 135px;
 	height: 140px;
-	background: url(images/project_icon.jpg) no-repeat;
+	background: url(/static/images/project_icon.jpg) no-repeat;
 }
 
 .section_w220 {
@@ -319,7 +319,7 @@ img {
 .other_project_list li { 
 	margin: 0 0 0 0;
 	padding: 5px 0 3px 25px;
-	background: url(images/list_icon.jpg) left center no-repeat;
+	background: url(/static/images/list_icon.jpg) left center no-repeat;
 }
 
 .other_project_list li a {
