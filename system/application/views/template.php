@@ -19,7 +19,7 @@
 	<div id="banner_wrapper">
 		<div id="banner">
 			<div id="banner_content">
-			<div id="banner_title">Vivamus a velit sociis natoque penatibus</div>
+			<div id="banner_title">banner</div>
 			<div id="banner_text">
 			</div>
 	    
