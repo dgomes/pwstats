@@ -1,32 +1,33 @@
 <html>
 
 	<head>
-		<?= include_once("header.php") ?>
-		<?= $header ?>
+		<?php include_once("header.php") ?>
+
+		<?php if(isset($header)) echo $header; ?>
 	</head>
 
 <body>
 	<div id="menu">
-		<?= include_once("menu.php") ?>
+		<?php include_once("menu.php") ?>
 	</div>
-	<div id="alerts">
-		<?= $alerts ?>
+	<div id="alert">
+		<?php if(isset($alert)) echo $alert; ?>
 	</div>
 
-	<div id="contents">
-		<?= $contents ?>
+	<div id="content">
+		<?php if(isset($content)) echo $content; ?>
 	</div>
 
 	<div id="left_panel">
-		<?= $left_panel ?>
+		<?php if(isset($left_panel)) echo $left_panel; ?>
 	</div>
 
 	<div id="right_panel">
-		<?= $right_panel ?>
+		<?php if(isset($right_panel)) echo $right_panel; ?>
 	</div>
 
 	<div id="footer">
-		<?= include_once("footer.php") ?>
+		<?php include_once("footer.php") ?>
 	</div>
 </body>
 </html>
