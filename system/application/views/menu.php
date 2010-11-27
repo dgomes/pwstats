@@ -1,6 +1,7 @@
 <ul>
 	<li><a href="">Home</a></li>
 	<li><a href="charts">Charts</a></li>
+	<li><a href="simulate">Simulate</a></li>
 	<li><a href="devices">Devices</a></li>
 	<?php
 		if(isset($user_id))
