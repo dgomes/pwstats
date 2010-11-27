@@ -18,6 +18,7 @@
 			 <div class="cleaner"></div>
 		</div>
 	</div>
+	<?php if(isset($banner)) { ?>
 	<div id="banner_wrapper">
 		<div id="banner">
 			<div id="banner_content">
@@ -30,18 +31,21 @@
 			<div class="cleaner"></div>   
 		</div> <!-- end of banner -->
 	</div> <!-- end of banner wrapper -->
+	<?php } ?>
 
+	<?php if(isset($alert)) { ?>
 	<div id="content_top_wrapper">
 		<div id="content_top">
     
 			<div class="header_01">Alerts</div>
 			<div id="alert">
-				<?php if(isset($alert)) echo $alert; ?>
+				<?php echo $alert; ?>
 			</div>
 			<div class="margin_bottom_10"></div>
 			<div class="cleaner"></div>
 	    	</div> <!-- end of content top -->
 	</div> <!-- end of content top wrapper -->
+	<?php } ?>
 
 	<div id="content_wrapper">
 		<div id="content">
