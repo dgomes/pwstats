@@ -17,9 +17,10 @@ class Charts extends Controller
 			return;
 		} else {
 			$data['user_id']	= $this->tank_auth->get_user_id();
-
-			$this->load->view('template', 'user_charts', $data);
+			$data['username']   = $this->tank_auth->get_username();
+			$this->template->load('content','user_charts',$data);
 		}
+			$this->template->render();
 	}
 }
 
