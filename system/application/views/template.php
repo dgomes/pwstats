@@ -9,12 +9,14 @@
 	</head>
 
 <body>
-	<div id="header">
-		<div id="logo"></div>
-		<div id="menu">
-			<?php include_once("menu.php") ?>
+	<div id="header_wrapper">
+		<div id="header">
+			<div id="logo"></div>
+			<div id="menu">
+				<?php include_once("menu.php") ?>
+			</div>
+			 <div class="cleaner"></div>
 		</div>
-		 <div class="cleaner"></div>
 	</div>
 	<div id="banner_wrapper">
 		<div id="banner">
