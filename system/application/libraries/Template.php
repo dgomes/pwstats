@@ -8,11 +8,15 @@ class Template {
 			$this->template_data[$name] = $value;
 		}
 	
-		function load($template = '', $view = '' , $view_data = array(), $return = FALSE)
+		function load($name, $view = '' , $view_data = array())
 		{               
 			$this->CI =& get_instance();
-			$this->set('contents', $this->CI->load->view($view, $view_data, TRUE));			
-			return $this->CI->load->view($template, $this->template_data, $return);
+			$this->set($name, $this->CI->load->view($view, $view_data, TRUE));			
+		}
+			
+		function render(){
+			$this->CI =& get_instance();
+			return $this->CI->load->view('template', $this->template_data);
 		}
 }
 
