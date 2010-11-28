@@ -15,7 +15,7 @@ class Series extends Controller {
 		foreach($val->result() as $row) {
 			$data[] = array( (int) $row->ts, (int) $row->power);
 		}
-		echo  "[ 'name': 'Power', 'values': ".json_encode($data)."]";
+		echo  "{ 'name': 'Power', 'values': ".json_encode($data)."}";
        }
 }
 ?>
