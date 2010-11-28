@@ -16,8 +16,9 @@ class Charts extends Controller
 			redirect('/auth/login', 'refresh');
 			return;
 		} else {
-			$data['user_id']	= $this->tank_auth->get_user_id();
-			$data['username']   = $this->tank_auth->get_username();
+			$data['reader_id'] = 2;
+			$data['user_id'] = $this->tank_auth->get_user_id();
+			$data['username'] = $this->tank_auth->get_username();
 			$this->template->load('header','user_charts_head',$data);
 			$this->template->load('content','user_charts',$data);
 		}

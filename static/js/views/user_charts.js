@@ -2,7 +2,7 @@
 Highcharts.theme = {};// prevent errors in default theme
 var highchartsOptions = Highcharts.getOptions();
  
-var dataUrl = "http://joaobarraca.com/imeter/db/data.php?";
+var dataUrl = base_url+"/series/lastday/"+reader_id;
 var maskMin = 0;
 var maskMax = 0;
 var min = 0;
@@ -16,12 +16,12 @@ $(document).ready(function() {
     var $masterContainer = $('<div id="master-container">').css({ position: 'absolute', top: 510, height: 80, width: '100%' }).appendTo($container);
     createMaster();
  
-    $.get(dataUrl+'id=1', function(resp) {
+    $.get(dataUrl, function(resp) {
         var data = eval("("+resp+")");
         jQuery.each(data.values, function(i, value) {
             data.values[i][0] = data.values[i][0] * 1000;
         });
-        addSeries(data.values,"Data");
+        addSeries(data.values,data.name);
         drawMask();
         masterChart.redraw();
         detailChart.redraw();
