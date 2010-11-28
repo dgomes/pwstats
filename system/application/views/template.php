@@ -25,10 +25,10 @@
 			<div id="banner_title">banner</div>
 			<div id="banner_text">
 			</div>
-	    
+
 			<div class="cleaner"></div>
 			</div> <!-- end of banner content -->
-			<div class="cleaner"></div>   
+			<div class="cleaner"></div>
 		</div> <!-- end of banner -->
 	</div> <!-- end of banner wrapper -->
 	<?php } ?>
@@ -36,7 +36,7 @@
 	<?php if(isset($alert)) { ?>
 	<div id="content_top_wrapper">
 		<div id="content_top">
-    
+
 			<div class="header_01">Alerts</div>
 			<div id="alert">
 				<?php echo $alert; ?>
@@ -59,11 +59,14 @@
 		<div id="right_panel">
 			<?php if(isset($right_panel)) echo $right_panel; ?>
 		</div>
+		<div class="cleaner"></div>
 	</div>
 	<div id="footer_wrapper">
     		<div id="footer">
 			<?php include_once("footer.php") ?>
+			<div class="cleaner"></div>
 		</div>
+		<div class="cleaner"></div>
 	</div>
 </body>
 </html>
