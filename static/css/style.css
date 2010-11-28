@@ -123,7 +123,7 @@ img {
 
 #header #menu {
 	float: right;
-    width: 600px;
+	 width: 600px;
 	height: 48px;
 }
 
@@ -371,6 +371,16 @@ img {
 #footer .normal_list li a {
 	color: #ffffff;
 	text-decoration: none;
+}
+
+#inline_list ul, li {
+	display: inline;
+}
+	
+#inline_list ul li a {
+	display: block;
+	padding: 20px;	
+	float: left;
 }
 
 .contact {

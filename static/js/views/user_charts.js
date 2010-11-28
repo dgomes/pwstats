@@ -2,32 +2,48 @@
 Highcharts.theme = {};// prevent errors in default theme
 var highchartsOptions = Highcharts.getOptions();
  
-var dataUrl = "http://joaobarraca.com/imeter/db/data.php?";
+var dataUrl = base_url+"/series/reader/"+reader_id;
 var maskMin = 0;
 var maskMax = 0;
 var min = 0;
 var max = 0;
+var time = 86400
  
 var masterChart,detailChart;
  
 $(document).ready(function() {
-    var $container = $('#container').css('position', 'relative');
-    var $detailContainer = $('<div id="detail-container">').appendTo($container);
-    var $masterContainer = $('<div id="master-container">').css({ position: 'absolute', top: 510, height: 80, width: '100%' }).appendTo($container);
-    createMaster();
- 
-    $.get(dataUrl+'id=1', function(resp) {
+	var $container = $('#container').css('position', 'relative');
+	var $detailContainer = $('<div id="detail-container">').appendTo($container);
+	var $masterContainer = $('<div id="master-container">').css({ position: 'absolute', top: 510, height: 80, width: '100%' }).appendTo($container);
+	createMaster();
+	load_data(time);
+});
+
+function load_data(ts)
+{
+    $.get(dataUrl+"/"+ts, function(resp) {
         var data = eval("("+resp+")");
         jQuery.each(data.values, function(i, value) {
             data.values[i][0] = data.values[i][0] * 1000;
         });
-        addSeries(data.values,"Data");
+        addSeries(data.values,data.name);
         drawMask();
         masterChart.redraw();
         detailChart.redraw();
  
     });
-});
+}
+
+function reload_chart(ts)
+{
+        jQuery.each(masterChart.series, function(i, series) {
+        	series.remove(false);
+	});
+        jQuery.each(detailChart.series, function(i, series) {
+        	series.remove(false);
+	});
+	load_data(ts);
+}
  
 function addSeries(values,sname)
 {
