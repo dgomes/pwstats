@@ -18,7 +18,7 @@ class Charts extends Controller
 		} else {
 			$data['user_id']	= $this->tank_auth->get_user_id();
 			$data['username']   = $this->tank_auth->get_username();
-			$this->template->load('head','user_charts_head',$data);
+			$this->template->load('header','user_charts_head',$data);
 			$this->template->load('content','user_charts',$data);
 		}
 			$this->template->render();
