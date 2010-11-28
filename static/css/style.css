@@ -89,14 +89,14 @@ ol li
   margin-right: auto;}
 
 #header
-{ background: url(/pwstats/static/images/back.png) repeat-x;
+{ background: url(/static/images/back.png) repeat-x;
   height: 185px;}
 
 #logo
 { width: 875px;
   position: relative;
   height: 193px;
-  background: url(/pwstats/static/images/green_logo.jpg) no-repeat;}
+  background: url(/static/images/green_logo.jpg) no-repeat;}
 
 #logo #logo_text 
 { position: absolute; 
@@ -122,7 +122,7 @@ ol li
 ul#menu
 { float: right;
   height: 40px;
-  background: url(/pwstats/static/images/menu.png) repeat-x;
+  background: url(/static/images/menu.png) repeat-x;
   width: auto;}
 
 ul#menu li
@@ -181,7 +181,7 @@ ul#menu li a:hover, ul#menu li.tab_selected a, ul#menu li.tab_selected a:hover
 .sidebar li a, .sidebar li a:hover
 { padding: 0 0 0 25px;
   display: block;
-  background: transparent url(/pwstats/static/images/link.png) no-repeat left center;} 
+  background: transparent url(/static/images/link.png) no-repeat left center;} 
 
 .sidebar li a.selected
 { color: #444;} 
@@ -198,7 +198,7 @@ ul#menu li a:hover, ul#menu li.tab_selected a, ul#menu li.tab_selected a:hover
   height: 33px;
   padding: 24px 0 5px 0;
   text-align: center; 
-  background: #635B53 url(/pwstats/static/images/footer.png) repeat-x;
+  background: #635B53 url(/static/images/footer.png) repeat-x;
   color: #A8AA94;
   text-transform: uppercase;
   letter-spacing: 0.1em;}
