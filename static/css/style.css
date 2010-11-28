@@ -8,7 +8,7 @@ body {
 	background: #ffffff;
 }
 
-a:link, a:visited { color: #d05c2d; text-decoration: underline; font-weight: normal; } 
+a:link, a:visited { color: #d05c2d; text-decoration: underline; font-weight: normal; }
 a:active, a:hover { color: #990000; text-decoration: none; }
 
 
@@ -58,7 +58,7 @@ img {
 	color: #ffffff;
 	font-weight: bold;
 	text-decoration: none;
-	border: none; 
+	border: none;
 	background: url(/static/images/button_01.png) no-repeat;
 }
 
@@ -74,7 +74,7 @@ img {
 	color: #ffffff;
 	font-weight: bold;
 	text-decoration: none;
-	border: none; 
+	border: none;
 	background: url(/static/images/button_02.jpg) no-repeat;
 }
 
@@ -147,7 +147,7 @@ img {
 	font-size: 13px;
 	font-weight: bold;
 	text-decoration: none;
-	color: #ffffff;	
+	color: #ffffff;
 	outline: none;
 }
 
@@ -231,12 +231,14 @@ img {
 	width: 100%;
 	margin: 0 auto;
 	background: #ffffff;
+	height: auto;
 }
 
 #content {
 	width: 940px;
 	margin: 0 auto;
 	padding: 40px 20px 0 20px;
+	height: auto;
 }
 
 .content_col_w420 {
@@ -265,7 +267,7 @@ img {
 	color: #fd4800;
 	text-decoration: none;
 }
-			  
+
 .image_wrapper_01 {
 	position: relative;
 	width: 441px;
@@ -316,7 +318,7 @@ img {
 	list-style: none;
 }
 
-.other_project_list li { 
+.other_project_list li {
 	margin: 0 0 0 0;
 	padding: 5px 0 3px 25px;
 	background: url(/static/images/list_icon.jpg) left center no-repeat;
@@ -352,7 +354,7 @@ img {
 }
 
 #footer a {
-	color: #e5b614;    
+	color: #e5b614;
 }
 
 .normal_list {
