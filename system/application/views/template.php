@@ -9,64 +9,29 @@
 	</head>
 
 <body>
-	<div id="header_wrapper">
-		<div id="header">
-			<div id="logo"></div>
-			<div id="menu">
+	<div id="header">
+		<div id="logo">
+			<div id="logo_text">
+				<h1><span class="green">Power</span>Stats</h1>
+			</div>
+		
+			<div id="menubar">
 				<?php include_once("menu.php") ?>
 			</div>
-			 <div class="cleaner"></div>
 		</div>
 	</div>
-	<?php if(isset($banner)) { ?>
-	<div id="banner_wrapper">
-		<div id="banner">
-			<div id="banner_content">
-			<div id="banner_title">banner</div>
-			<div id="banner_text">
-			</div>
-
-			<div class="cleaner"></div>
-			</div> <!-- end of banner content -->
-			<div class="cleaner"></div>
-		</div> <!-- end of banner -->
-	</div> <!-- end of banner wrapper -->
-	<?php } ?>
-
-	<?php if(isset($alert)) { ?>
-	<div id="content_top_wrapper">
-		<div id="content_top">
-
-			<div class="header_01">Alerts</div>
-			<div id="alert">
-				<?php echo $alert; ?>
-			</div>
-			<div class="margin_bottom_10"></div>
-			<div class="cleaner"></div>
-	    	</div> <!-- end of content top -->
-	</div> <!-- end of content top wrapper -->
-	<?php } ?>
-
-	<div id="content_wrapper">
+	<div id="site_content">
 		<div id="content">
 			<?php if(isset($content)) echo $content; ?>
 		</div>
-
-		<div id="left_panel">
-			<?php if(isset($left_panel)) echo $left_panel; ?>
+		<?php if(isset($sidebar)){ ?>
+		<div id="sidebar">
+			<?php echo $sidebar; ?>
 		</div>
-
-		<div id="right_panel">
-			<?php if(isset($right_panel)) echo $right_panel; ?>
-		</div>
-		<div class="cleaner"></div>
+		<?php } ?>
 	</div>
-	<div id="footer_wrapper">
-    		<div id="footer">
-			<?php include_once("footer.php") ?>
-			<div class="cleaner"></div>
-		</div>
-		<div class="cleaner"></div>
+    	<div id="footer">
+		<?php include_once("footer.php") ?>
 	</div>
 </body>
 </html>
