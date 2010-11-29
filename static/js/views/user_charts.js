@@ -1,16 +1,16 @@
 
 Highcharts.theme = {};// prevent errors in default theme
 var highchartsOptions = Highcharts.getOptions();
- 
+
 var dataUrl = base_url+"/series/reader/"+reader_id;
 var maskMin = 0;
 var maskMax = 0;
 var min = 0;
 var max = 0;
 var time = 86400
- 
+
 var masterChart,detailChart;
- 
+
 $(document).ready(function() {
 	var $container = $('#container').css('position', 'relative');
 	var $detailContainer = $('<div id="detail-container">').appendTo($container);
@@ -30,7 +30,7 @@ function load_data(ts)
         drawMask();
         masterChart.redraw();
         detailChart.redraw();
- 
+
     });
 }
 
@@ -44,32 +44,29 @@ function reload_chart(ts)
 	});
 	load_data(ts);
 }
- 
+
 function addSeries(values,sname)
 {
-    if(maskMin == 0){
-        if(values.length > 288)
-            maskMin = values[values.length - 288][0];
-        else
-            maskMin = values[0][0];
+    if(maskMin == 0)
+	{
+    	maskMin = values[0][0];
     }
     if(maskMax == 0)
     {
-        if(maskMax < values[values.length -1][0])
-            maskMax = values[values.length -1][0];
+    	maskMax = values[values.length -1][0];
     }
- 
+
     if(min > values[0][0])
         min = values[0][0];
- 
+
     if(max < values[values.length -1][0])
         max = values[values.length -1 ][0];
     var masterSeries ={ data: values, name: sname, color: highchartsOptions.colors[masterChart.series.length] };
     var detailSeries ={ data: "", name: sname, color: highchartsOptions.colors[masterChart.series.length] };
     masterChart.addSeries(masterSeries,false);
-    detailChart.addSeries(detailSeries,false); 
+    detailChart.addSeries(detailSeries,false);
 }
- 
+
 function drawMask()
 {
 	var xAxis = masterChart.xAxis[0];
@@ -81,7 +78,7 @@ function drawMask()
 		to: maskMin,
 		color: Highcharts.theme.maskColor || 'rgba(0, 0, 0, 0.2)'
 	});
- 
+
 	xAxis.removePlotBand('mask-after');
 	xAxis.addPlotBand({
 		id: 'mask-after',
@@ -89,7 +86,7 @@ function drawMask()
 		to: max,
 		color: Highcharts.theme.maskColor || 'rgba(0, 0, 0, 0.2)'
 	});
-	
+
 	var sz = detailChart.series.length;
 	var i = 0;
 	for(i=0;i<sz;i++){
@@ -104,7 +101,7 @@ function drawMask()
 		});
 		detailChart.series[i].setData(detailData[i]);
 	}
- 
+
 	var extremes = detailChart.xAxis[0].getExtremes();
  	var day = new Date(14*3600*1000).getTime();
 	var minDate = new Date(extremes.min+day);
@@ -122,7 +119,7 @@ function drawMask()
 		};
 		detailChart.xAxis[0].addPlotLine({'value': x, 'color': 'gray', id:'plot-line-'+i,width:2, dashStyle: "ShortDot", label: lbl, zIndex: 1});
 	}
- 
+
 }
 
 function createMaster()
