@@ -14,11 +14,15 @@ class Charts extends Controller
 	{
 		if (!$this->tank_auth->is_logged_in()) {
 			redirect('/auth/login', 'refresh');
+			return;
 		} else {
-			$data['user_id']	= $this->tank_auth->get_user_id();
-			$data['username']	= $this->tank_auth->get_username();
-			$this->load->view('user_charts', $data);
+			$data['reader_id'] = 2;
+			$data['user_id'] = $this->tank_auth->get_user_id();
+			$data['username'] = $this->tank_auth->get_username();
+			$this->template->load('header','user_charts_head',$data);
+			$this->template->load('content','user_charts',$data);
 		}
+			$this->template->render();
 	}
 }
 
