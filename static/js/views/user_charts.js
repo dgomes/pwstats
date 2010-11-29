@@ -36,7 +36,11 @@ function load_data(ts)
 
 function reload_chart(ts)
 {
-        jQuery.each(masterChart.series, function(i, series) {
+	maskMin = 0;
+	maskMax = 0;
+	min = 0;
+	max = 0;
+    jQuery.each(masterChart.series, function(i, series) {
         	series.remove(false);
 	});
         jQuery.each(detailChart.series, function(i, series) {
