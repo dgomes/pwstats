@@ -88,7 +88,8 @@ class Auth extends Controller
 					$data['captcha_html'] = $this->_create_captcha();
 				}
 			}
-			$this->load->view('auth/login_form', $data);
+			$this->template->load('content','auth/login_form', $data);
+			$this->template->render();
 		}
 	}
 
@@ -187,7 +188,8 @@ class Auth extends Controller
 			$data['use_username'] = $use_username;
 			$data['captcha_registration'] = $captcha_registration;
 			$data['use_recaptcha'] = $use_recaptcha;
-			$this->load->view('auth/register_form', $data);
+			$this->template->load('content','auth/register_form', $data);
+			$this->template->render();
 		}
 	}
 
@@ -222,7 +224,8 @@ class Auth extends Controller
 					foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
 				}
 			}
-			$this->load->view('auth/send_again_form', $data);
+			$this->template->load('content','auth/send_again_form', $data);
+			$this->template->render();
 		}
 	}
 
@@ -283,7 +286,8 @@ class Auth extends Controller
 					foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
 				}
 			}
-			$this->load->view('auth/forgot_password_form', $data);
+			$this->template->view('content','auth/forgot_password_form', $data);
+			$this->template->render();
 		}
 	}
 
@@ -332,7 +336,8 @@ class Auth extends Controller
 				return;
 			}
 		}
-		$this->load->view('auth/reset_password_form', $data);
+		$this->template->view('content','auth/reset_password_form', $data);
+		$this->template->render();
 	}
 
 	/**
@@ -364,7 +369,8 @@ class Auth extends Controller
 					foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
 				}
 			}
-			$this->load->view('auth/change_password_form', $data);
+			$this->template->view('content','auth/change_password_form', $data);
+			$this->template->render();
 		}
 	}
 
@@ -402,7 +408,8 @@ class Auth extends Controller
 					foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
 				}
 			}
-			$this->load->view('auth/change_email_form', $data);
+			$this->template->view('content','auth/change_email_form', $data);
+			$this->template->render();
 		}
 	}
 
@@ -454,7 +461,8 @@ class Auth extends Controller
 					foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
 				}
 			}
-			$this->load->view('auth/unregister_form', $data);
+			$this->template->view('content','auth/unregister_form', $data);
+			$this->template->render();
 		}
 	}
 
@@ -466,7 +474,8 @@ class Auth extends Controller
 	 */
 	function _show_message($message)
 	{
-		$this->load->view('auth/general_message', array('message' => $message));
+		$this->template->view('content','auth/general_message', array('message' => $message));
+		$this->template->render();
 	}
 
 	/**
