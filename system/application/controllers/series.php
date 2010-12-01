@@ -29,9 +29,12 @@ class Series extends Controller {
 			else
 				$date->setTimestamp($start);
 			$this->db->select("entries.entry AS power,".
-				"UNIX_TIMESTAMP( entries.unit_timestamp ) AS ts FROM entries, entries_types ".
-				"WHERE entries.readers_id = $reader_id AND  entries_types.name='Power' ".
-				"AND entries.entries_types_id = entries_types.id ".
+				"UNIX_TIMESTAMP( entries.unit_timestamp ) AS ts FROM entries".
+				"INNER JOIN entries_types ON entries_types.id = entries.entries_types_id ".
+				"INNER JOIN readers ON readers.user_id = '".$user."' ".
+				"WHERE entries.readers_id = $reader_id  ".
+				"AND entries.readers_id = readers.id ".
+				"AND entries_types.name = 'Power' ".
 				"AND UNIX_TIMESTAMP(entries.site_timestamp) > ".$date->getTimestamp(), FALSE);
 			$val = $this->db->get();
 			$data = array();
