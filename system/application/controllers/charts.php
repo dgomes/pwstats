@@ -19,7 +19,7 @@ class Charts extends Controller
 			$data['user_id'] = $this->tank_auth->get_user_id();
 			$data['username'] = $this->tank_auth->get_username();
 
-			$this->db->select("devices.name, devices.id FROM devices".
+			$this->db->select("devices.name, devices.id FROM devices ".
 					"WHERE devices.user_id=".$this->tank_auth->get_user_id());
 			$val = $this->db->get();
 			$devices= array();
