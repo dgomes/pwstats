@@ -20,14 +20,17 @@ class Series extends Controller {
 				 return;
 			 }
 
+			$user = $this->tank_auth->get_user_id();
 			$reader_id = (int) $reader_id;
 			$age = (int) $age;
 			$date = new DateTime();
 			$start = $date->getTimestamp() - $age;
+		
 			if($age == 0)
 				$date->setTimestamp(0);
 			else
 				$date->setTimestamp($start);
+
 			$this->db->select("entries.entry AS power, ".
 				"UNIX_TIMESTAMP( entries.unit_timestamp ) AS ts FROM entries ".
 				"INNER JOIN entries_types ON entries_types.id = entries.entries_types_id ".
