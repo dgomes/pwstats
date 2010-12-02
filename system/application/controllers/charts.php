@@ -23,9 +23,15 @@ class Charts extends Controller
 					"WHERE readers.user_id=".$this->tank_auth->get_user_id());
 			$val = $this->db->get();
 			$data['devices']= array();
+			
 			foreach($val->result() as $row) {
 				$data['devices'][] = array('name' =>$row->name, 'id' => (int) $row->id);
+				if(count($data['devices'])== 0)
+				{
+					$data['reader_id'] = $row->id;
+				}
 			}
+			
 			$this->template->load('header','user_charts_head',$data);
 			$this->template->load('sidebar','user_charts_side',$data);
 			$this->template->load('content','user_charts',$data);

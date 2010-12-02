@@ -3,7 +3,10 @@
 	<?php
 		foreach($devices as $device)
 		{
-			echo '<input type="checkbox" name="device" value="'.$device['name'].'" /><br />';
+			echo '<input type="checkbox" name="device" ';
+			if($device['id'] == $reader_id)
+				echo ' checked="yes" ';
+			echo 'value="'.$device['name'].'" /><br />';
 		}
 	?>
 	</div>
