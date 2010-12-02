@@ -24,7 +24,7 @@ class Charts extends Controller
 			$val = $this->db->get();
 			$data['devices']= array();
 			foreach($val->result() as $row) {
-				$data['devices'][] = array($row->name, (int) $row->id);
+				$data['devices'][] = array('name' =>$row->name, 'id' => (int) $row->id);
 			}
 			$this->template->load('header','user_charts_head',$data);
 			$this->template->load('sidebar','user_charts_side',$data);
