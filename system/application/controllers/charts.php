@@ -22,12 +22,12 @@ class Charts extends Controller
 			$this->db->select("readers.name, readers.id FROM readers ".
 					"WHERE readers.user_id=".$this->tank_auth->get_user_id());
 			$val = $this->db->get();
-			$devices= array();
+			$data['devices']= array();
 			foreach($val->result() as $row) {
-				$devices[] = array($row->name, (int) $row->id);
+				$data['devices'][] = array($row->name, (int) $row->id);
 			}
 			$this->template->load('header','user_charts_head',$data);
-			$this->template->load('sidebar','user_charts_side',$devices);
+			$this->template->load('sidebar','user_charts_side',$data);
 			$this->template->load('content','user_charts',$data);
 		}
 			$this->template->render();
