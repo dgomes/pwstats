@@ -28,8 +28,8 @@ class Series extends Controller {
 				$date->setTimestamp(0);
 			else
 				$date->setTimestamp($start);
-			$this->db->select("entries.entry AS power,".
-				"UNIX_TIMESTAMP( entries.unit_timestamp ) AS ts FROM entries".
+			$this->db->select("entries.entry AS power, ".
+				"UNIX_TIMESTAMP( entries.unit_timestamp ) AS ts FROM entries ".
 				"INNER JOIN entries_types ON entries_types.id = entries.entries_types_id ".
 				"INNER JOIN readers ON readers.user_id = '".$user."' ".
 				"WHERE entries.readers_id = $reader_id  ".
