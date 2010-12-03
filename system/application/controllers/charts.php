@@ -25,11 +25,11 @@ class Charts extends Controller
 			$data['devices']= array();
 			
 			foreach($val->result() as $row) {
-				$data['devices'][] = array('name' =>$row->name, 'id' => (int) $row->id);
 				if(count($data['devices'])== 0)
 				{
 					$data['reader_id'] = $row->id;
 				}
+				$data['devices'][] = array('name' =>$row->name, 'id' => (int) $row->id);
 			}
 			
 			$this->template->load('header','user_charts_head',$data);

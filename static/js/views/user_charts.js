@@ -2,7 +2,7 @@
 Highcharts.theme = {};// prevent errors in default theme
 var highchartsOptions = Highcharts.getOptions();
 
-var dataUrl = base_url+"/series/reader/"+reader_id;
+var dataUrl = base_url+"/series/reader/";
 var maskMin = 0;
 var maskMax = 0;
 var min = 0;
@@ -19,14 +19,34 @@ $(document).ready(function() {
 	load_data(time);
 });
 
-function load_data(ts)
+function  deviceSelectEvent(sender)
 {
-    $.get(dataUrl+"/"+ts, function(resp) {
+	if(sender.checked == false){
+		reader_id = sender.value;
+		load_data(time,sender.value);
+	}else{
+   		jQuery.each(masterChart.series, function(i, series) {
+        		if(series.name == sender.value)
+				series.remove(true);
+		});
+   		jQuery.each(detailChart.series, function(i, series) {
+        		if(series.name == sender.value)
+				series.remove(true);
+		});
+
+	}
+}
+
+function load_data(ts,name)
+{
+    $.get(dataUrl+"/"+reader_id+"/"+ts, function(resp) {
         var data = eval("("+resp+")");
         jQuery.each(data.values, function(i, value) {
             data.values[i][0] = data.values[i][0] * 1000;
         });
-        addSeries(data.values,data.name);
+	if(name == null)
+		name = reader_id;
+        addSeries(data.values,name);
         drawMask();
         masterChart.redraw();
         detailChart.redraw();
@@ -36,17 +56,18 @@ function load_data(ts)
 
 function reload_chart(ts)
 {
+	time = ts;
 	maskMin = 0;
 	maskMax = 0;
 	min = 0;
 	max = 0;
-    jQuery.each(masterChart.series, function(i, series) {
+   	jQuery.each(masterChart.series, function(i, series) {
         	series.remove(false);
 	});
         jQuery.each(detailChart.series, function(i, series) {
         	series.remove(false);
 	});
-	load_data(ts);
+	load_data(ts,null);
 }
 
 function addSeries(values,sname)

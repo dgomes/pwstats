@@ -7,7 +7,8 @@ html
 
 body
 { font: normal .80em arial, sans-serif;
-  color: #FFF;}
+  color: #000;
+}
 
 p
 { padding: 0 0 20px 0;
@@ -161,35 +162,42 @@ ul#menu li a:hover, ul#menu li.tab_selected a, ul#menu li.tab_selected a:hover
   overflow: hidden;
   margin: 20px auto} 
 
-.sidebar
-{ float: right;
-  width: 190px;
-  padding: 0 15px 20px 15px;}
+#sidebar
+{ 
+  float: right;
+  width: 150px;
+  margin-right: 0;
+  padding: 20px 15px 20px 15px;
+}
 
-.sidebar h2
-{ padding: 0 0 5px 0;}
+#sidebar h2
+{ 
+padding: 20px 0 5px 0;
+}
 
-.sidebar ul
-{ width: 190px; 
+#sidebar ul
+{ 
   padding: 4px 0 0 0; 
   margin: 4px 0 30px 0;}
 
-.sidebar li
+#sidebar li
 { list-style: none; 
   padding: 0 0 7px 0; }
 
-.sidebar li a, .sidebar li a:hover
+#sidebar li a, #sidebar li a:hover
 { padding: 0 0 0 25px;
   display: block;
   background: transparent url(/static/images/link.png) no-repeat left center;} 
-
-.sidebar li a.selected
+#sidebar li a.selected
 { color: #444;} 
 
 #content
-{ text-align: left;
-  width: 100%;
-  padding: 0;}
+{
+  text-align: left;
+  margin-right: 0px;
+  width: auto;
+  float: left;
+}
 
 #footer
 { width: 100%;
@@ -292,4 +300,14 @@ table tr th, table tr td
 table tr td
 { background: #C8BFB0;
   color: #47433F;
-  border-top: 1px solid #EDEBE5;}
+  border-top: 1px solid #EDEBE5;
+}
+
+.clear { 
+  clear: both; 
+  height: 1px; 
+  overflow: hidden; 
+  font-size:0pt; 
+  margin-top: -1px; 
+}
+
