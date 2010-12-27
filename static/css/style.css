@@ -90,14 +90,14 @@ ol li
   margin-right: auto;}
 
 #header
-{ background: url(/static/images/back.png) repeat-x;
+{ background: url(../images/back.png) repeat-x;
   height: 185px;}
 
 #logo
 { width: 875px;
   position: relative;
   height: 193px;
-  background: url(/static/images/green_logo.jpg) no-repeat;}
+  background: url(../images/green_logo.jpg) no-repeat;}
 
 #logo #logo_text 
 { position: absolute; 
@@ -123,7 +123,7 @@ ol li
 ul#menu
 { float: right;
   height: 40px;
-  background: url(/static/images/menu.png) repeat-x;
+  background: url(../images/menu.png) repeat-x;
   width: auto;}
 
 ul#menu li
@@ -187,7 +187,7 @@ padding: 20px 0 5px 0;
 #sidebar li a, #sidebar li a:hover
 { padding: 0 0 0 25px;
   display: block;
-  background: transparent url(/static/images/link.png) no-repeat left center;} 
+  background: transparent url(../images/link.png) no-repeat left center;} 
 #sidebar li a.selected
 { color: #444;} 
 
@@ -206,7 +206,7 @@ padding: 20px 0 5px 0;
   height: 33px;
   padding: 24px 0 5px 0;
   text-align: center; 
-  background: #635B53 url(/static/images/footer.png) repeat-x;
+  background: #635B53 url(../images/footer.png) repeat-x;
   color: #A8AA94;
   text-transform: uppercase;
   letter-spacing: 0.1em;}
@@ -290,15 +290,17 @@ padding: 20px 0 5px 0;
   margin: 0 0 20px 0;}
   
 table
-{ margin: 10px 0 30px 0;}
+{ margin: 10px 0 30px 0;
+  background: #EDEBE5;
+}
 
 table tr th, table tr td
-{ background: #63574B;
+{ background: #EDEBE5;
   color: #FFF;
   padding: 7px 4px;}
   
 table tr td
-{ background: #C8BFB0;
+{ background: #EDEBE5;
   color: #47433F;
   border-top: 1px solid #EDEBE5;
 }
