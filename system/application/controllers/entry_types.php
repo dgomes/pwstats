@@ -1,9 +1,9 @@
 <?php
 class Entries_types extends CI_Controller {
 
-       function Entries_types()
+       function __construct()
        {
-            parent::Controller();
+            parent::__construct();
 
             $this->load->library('tank_auth');
 	    if ($this->tank_auth->is_logged_in())

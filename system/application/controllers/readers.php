@@ -1,9 +1,9 @@
 <?php
 class Readers extends CI_Controller {
 
-       function Readers()
+       function __construct()
        {
-            parent::Controller();
+            parent::__construct();
             $this->load->library('tank_auth');
 	    if ($this->tank_auth->is_logged_in())
 		    $this->load->scaffolding('readers');
