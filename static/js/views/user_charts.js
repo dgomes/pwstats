@@ -7,7 +7,7 @@ var maskMin = 0;
 var maskMax = 0;
 var min = 0;
 var max = 0;
-var time = 3600
+var time = 3600*24;
 
 var masterChart,detailChart;
 
@@ -73,7 +73,7 @@ function reload_chart(ts)
 function addSeries(values,sname)
 {
 	if(values.length > 0)
-	{	
+	{
     	if(maskMin == 0)
 		{
     		maskMin = values[0][0];
