@@ -4,9 +4,9 @@ class Cron extends CI_Controller {
 
                 private $plugins = null;
 
-                function Cron()
+                function __construct()
                 {
-                        parent::Controller();
+                        parent::__construct();
                         $this->load->helper('url');
                 }
 
