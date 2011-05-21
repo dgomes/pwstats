@@ -7,7 +7,7 @@ var maskMin = 0;
 var maskMax = 0;
 var min = 0;
 var max = 0;
-var time = 86400
+var time = 3600
 
 var masterChart,detailChart;
 
@@ -72,21 +72,24 @@ function reload_chart(ts)
 
 function addSeries(values,sname)
 {
-    if(maskMin == 0)
-	{
-    	maskMin = values[0][0];
-    }
-    if(maskMax == 0)
-    {
-    	maskMax = values[values.length -1][0];
-    }
+	if(values.length > 0)
+	{	
+    	if(maskMin == 0)
+		{
+    		maskMin = values[0][0];
+    	}
+   		if(maskMax == 0)
+    	{
+    		maskMax = values[values.length -1][0];
+    	}
 
-    if(min > values[0][0])
-        min = values[0][0];
+    	if(min > values[0][0])
+        	min = values[0][0];
 
-    if(max < values[values.length -1][0])
-        max = values[values.length -1 ][0];
-    var masterSeries ={ data: values, name: sname, color: highchartsOptions.colors[masterChart.series.length] };
+    	if(max < values[values.length -1][0])
+       		max = values[values.length -1 ][0];
+	}
+	var masterSeries ={ data: values, name: sname, color: highchartsOptions.colors[masterChart.series.length] };
     var detailSeries ={ data: "", name: sname, color: highchartsOptions.colors[masterChart.series.length] };
     masterChart.addSeries(masterSeries,false);
     detailChart.addSeries(detailSeries,false);
