@@ -1,10 +1,12 @@
-<?php
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+
 class Series extends CI_Controller {
 
-		function Series()
+		function __construct()
 		{
-			parent::Controller();
+			parent::__construct();
 			$this->load->helper('url');
+		
 		}
 
 		function widget($key, $reader_id, $age= 86400)
