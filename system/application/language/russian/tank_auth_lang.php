@@ -8,7 +8,7 @@ $lang['auth_email_in_use'] = 'Этот email уже занят. Пожалуйс
 $lang['auth_username_in_use'] = 'Этот логин уже занят. Пожалуйста, укажите другой.';
 $lang['auth_current_email'] = 'Это ваш текущий email';
 $lang['auth_incorrect_captcha'] = 'Введенные вами символы не соответствуют символам на картинке.';
-$lang['auth_captcha_expired'] = 'Ваш код подтверждения устарел. Пожалуйста повторите попытку.';
+$lang['auth_captcha_expired'] = 'Ваш код подтверждения устарел. Пожалуйста, повторите попытку.';
 
 // Notifications
 $lang['auth_message_logged_out'] = 'Вы успешно вышли.';

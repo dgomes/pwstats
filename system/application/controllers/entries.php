@@ -1,5 +1,5 @@
 <?php
-class Entries extends Controller {
+class Entries extends CI_Controller {
 
        function Entries()
        {

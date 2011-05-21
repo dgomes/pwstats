@@ -1,5 +1,5 @@
 <?php
-class Series extends Controller {
+class Series extends CI_Controller {
 
 		function Series()
 		{
@@ -25,7 +25,7 @@ class Series extends Controller {
 			$age = (int) $age;
 			$date = new DateTime();
 			$start = $date->getTimestamp() - $age;
-		
+
 			if($age == 0)
 				$date->setTimestamp(0);
 			else

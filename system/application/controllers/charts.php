@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Charts extends Controller
+class Charts extends CI_Controller
 {
 	function __construct()
 	{
@@ -23,7 +23,7 @@ class Charts extends Controller
 					"WHERE readers.user_id=".$this->tank_auth->get_user_id());
 			$val = $this->db->get();
 			$data['devices']= array();
-			
+
 			foreach($val->result() as $row) {
 				if(count($data['devices'])== 0)
 				{
@@ -31,7 +31,7 @@ class Charts extends Controller
 				}
 				$data['devices'][] = array('name' =>$row->name, 'id' => (int) $row->id);
 			}
-			
+
 			$this->template->load('header','user_charts_head',$data);
 			$this->template->load('sidebar','user_charts_side',$data);
 			$this->template->load('content','user_charts',$data);

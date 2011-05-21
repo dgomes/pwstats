@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Devices extends Controller
+class Devices extends CI_Controller
 {
 	function __construct()
 	{
@@ -23,7 +23,7 @@ class Devices extends Controller
 					"WHERE readers.user_id=".$this->tank_auth->get_user_id());
 			$val = $this->db->get();
 			$data['devices']= array();
-			
+
 			foreach($val->result() as $row) {
 				if(count($data['devices'])== 0)
 				{
@@ -31,7 +31,7 @@ class Devices extends Controller
 				}
 				$data['devices'][] = array('name' =>$row->name, 'id' => (int) $row->id, 'url' => $row->url, 'poll_interval' => $row->poll_interval);
 			}
-			
+
 			$this->template->load('content','devices',$data);
 		}
 			$this->template->render();
@@ -44,11 +44,11 @@ class Devices extends Controller
 			$this->db->select("readers.*, models.name AS model_name FROM readers,models ".
 					"WHERE readers.user_id=".$this->tank_auth->get_user_id()." AND readers.id=".$id." AND readers.models_id = models.id");
 			$val = $this->db->get();
-			$data = (array) end($val->result()); 
+			$data = (array) end($val->result());
 
 			$this->db->select("unit_timestamp AS last_update FROM `entries` WHERE readers_id=1 ORDER BY unit_timestamp DESC LIMIT 1");
 			$val = $this->db->get();
-			
+
 			$data = array_merge($data, (array) end($val->result()));
 
 			$this->template->load('content','device_info',$data);

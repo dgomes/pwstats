@@ -1,5 +1,5 @@
 <?php
-class Readers extends Controller {
+class Readers extends CI_Controller {
 
        function Readers()
        {

@@ -9,7 +9,7 @@
  * @package	Tank_auth
  * @author	Ilya Konyukhov (http://konyukhov.com/soft/)
  */
-class User_Autologin extends Model
+class User_Autologin extends CI_Model
 {
 	private $table_name			= 'user_autologin';
 	private $users_table_name	= 'users';

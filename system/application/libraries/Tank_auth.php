@@ -2,9 +2,6 @@
 
 require_once('phpass-0.1/PasswordHash.php');
 
-define('PHPASS_HASH_STRENGTH', 8);
-define('PHPASS_HASH_PORTABLE', FALSE);
-
 define('STATUS_ACTIVATED', '1');
 define('STATUS_NOT_ACTIVATED', '0');
 
@@ -15,7 +12,7 @@ define('STATUS_NOT_ACTIVATED', '0');
  *
  * @package		Tank_auth
  * @author		Ilya Konyukhov (http://konyukhov.com/soft/)
- * @version		1.0.7
+ * @version		1.0.9
  * @based on	DX Auth by Dexcell (http://dexcell.shinsengumiteam.com/dx_auth)
  * @license		MIT License Copyright (c) 2008 Erick Hartanto
  */
@@ -62,7 +59,9 @@ class Tank_auth
 			if (!is_null($user = $this->ci->users->$get_user_func($login))) {	// login ok
 
 				// Does password match hash in database?
-				$hasher = new PasswordHash(PHPASS_HASH_STRENGTH, PHPASS_HASH_PORTABLE);
+				$hasher = new PasswordHash(
+						$this->ci->config->item('phpass_hash_strength', 'tank_auth'),
+						$this->ci->config->item('phpass_hash_portable', 'tank_auth'));
 				if ($hasher->CheckPassword($password, $user->password)) {		// password ok
 
 					if ($user->banned == 1) {									// fail - banned
@@ -170,7 +169,9 @@ class Tank_auth
 
 		} else {
 			// Hash password using phpass
-			$hasher = new PasswordHash(PHPASS_HASH_STRENGTH, PHPASS_HASH_PORTABLE);
+			$hasher = new PasswordHash(
+					$this->ci->config->item('phpass_hash_strength', 'tank_auth'),
+					$this->ci->config->item('phpass_hash_portable', 'tank_auth'));
 			$hashed_password = $hasher->HashPassword($password);
 
 			$data = array(
@@ -333,7 +334,9 @@ class Tank_auth
 			if (!is_null($user = $this->ci->users->get_user_by_id($user_id, TRUE))) {
 
 				// Hash password using phpass
-				$hasher = new PasswordHash(PHPASS_HASH_STRENGTH, PHPASS_HASH_PORTABLE);
+				$hasher = new PasswordHash(
+						$this->ci->config->item('phpass_hash_strength', 'tank_auth'),
+						$this->ci->config->item('phpass_hash_portable', 'tank_auth'));
 				$hashed_password = $hasher->HashPassword($new_password);
 
 				if ($this->ci->users->reset_password(
@@ -372,7 +375,9 @@ class Tank_auth
 		if (!is_null($user = $this->ci->users->get_user_by_id($user_id, TRUE))) {
 
 			// Check if old password correct
-			$hasher = new PasswordHash(PHPASS_HASH_STRENGTH, PHPASS_HASH_PORTABLE);
+			$hasher = new PasswordHash(
+					$this->ci->config->item('phpass_hash_strength', 'tank_auth'),
+					$this->ci->config->item('phpass_hash_portable', 'tank_auth'));
 			if ($hasher->CheckPassword($old_pass, $user->password)) {			// success
 
 				// Hash new password using phpass
@@ -405,7 +410,9 @@ class Tank_auth
 		if (!is_null($user = $this->ci->users->get_user_by_id($user_id, TRUE))) {
 
 			// Check if password correct
-			$hasher = new PasswordHash(PHPASS_HASH_STRENGTH, PHPASS_HASH_PORTABLE);
+			$hasher = new PasswordHash(
+					$this->ci->config->item('phpass_hash_strength', 'tank_auth'),
+					$this->ci->config->item('phpass_hash_portable', 'tank_auth'));
 			if ($hasher->CheckPassword($password, $user->password)) {			// success
 
 				$data = array(
@@ -466,7 +473,9 @@ class Tank_auth
 		if (!is_null($user = $this->ci->users->get_user_by_id($user_id, TRUE))) {
 
 			// Check if password correct
-			$hasher = new PasswordHash(PHPASS_HASH_STRENGTH, PHPASS_HASH_PORTABLE);
+			$hasher = new PasswordHash(
+					$this->ci->config->item('phpass_hash_strength', 'tank_auth'),
+					$this->ci->config->item('phpass_hash_portable', 'tank_auth'));
 			if ($hasher->CheckPassword($password, $user->password)) {			// success
 
 				$this->ci->users->delete_user($user_id);
