@@ -378,7 +378,6 @@ function createMaster()
 	 chart: {
 		marginBottom: 20,
 		renderTo: 'detail-container',
-		         defaultSeriesType: 'spline',
 		reflow: false,
 		marginLeft: 50,
 		height: 500,
