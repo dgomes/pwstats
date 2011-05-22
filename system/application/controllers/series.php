@@ -44,29 +44,30 @@ class Series extends CI_Controller {
 			$val = $this->db->get();
 			$data = array();
 			$sum = 0;
-			$last = 0;
+			$lastTime = 0;
+			$lastValue = 0;
 			$count = 0;
 			$interval = (($max - $min) / 200 ) / 1000;
 			$first = -1;
 			foreach($val->result() as $row) {
-				if($first == -1)
-				{
-					$first = $row->ts;
-				}
 				if($detail == 1)
 				{
-					$data[] = array( (int) $row->ts-$first, (int) $row->power);	
+					$data[] = array( (int) $row->ts-$lastTime, (int)$row->power-$lastValue);
+					$lastTime = $row->ts;
+					$lastValue = $row->power;	
 				}else
 				{
 					$sum = $sum + $row->power;
 					$count++;
 
-					if($last + $interval <= $row->ts)
+					if($lastTime + $interval <= $row->ts)
 					{
-									$data[] = array( (int) $row->ts-$first, (int)round($sum / $count,0) );
+									$d = (int) round($sum / $count,0);
+									$data[] = array( (int) $row->ts-$lastTime, $d - $lastValue );
 									$count = 0;
 									$sum = 0;
-									$last = $row->ts;
+									$lastTime = $row->ts;
+									$lastValue = $d;
 					}	
 				}
 				
@@ -74,7 +75,7 @@ class Series extends CI_Controller {
 				
 			}
 			$this->db->stop_cache();
-			echo  "{ 'name': 'Power', 'first':".$first.",'values': ".json_encode($data)."}";
+			echo  "{ 'name': 'Power','values': ".json_encode($data)."}";
        	}
 	}
 ?>

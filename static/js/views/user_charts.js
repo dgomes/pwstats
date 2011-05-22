@@ -48,20 +48,51 @@ function  deviceSelectEvent(sender)
 function load_data(min,max,name)
 {      
      
-    $.get(dataUrl+"/"+reader_id+"/"+min+"/"+max, function(resp) {
+    $.get(dataUrl+"/"+reader_id+"/"+min+"/"+max+"/1", function(resp) {
         var data = eval("("+resp+")");
+        var lastValue = 0;
+		var lastTime = 0;
+		
         jQuery.each(data.values, function(i, value) {
-            data.values[i][0] = (data.first+data.values[i][0]) * 1000;
+        	var t = lastTime+data.values[i][0];
+        	var v =  lastValue+data.values[i][1];
+        	data.values[i][0] = t*1000;
+        	data.values[i][1] = v;
+      		lastTime = t;
+        	lastValue = v;
         });
         
+        detailData = data.values;
+        
+        var masterData = new Array();
+		var interval = (detailData[detailData.length-1][0] - detailData[0][0]) / 200;
+		var last = 0;
+		var sum = 0;
+		var count = 0;
+		for(i = 0; i < detailData.length;i++)
+		{
+			count++;
+			sum += detailData[i][1];
+				
+			if(last + interval < detailData[i][0])
+			{
+				masterData.push(new Array(detailData[i][0],sum / count));
+				last = detailData[i][0];
+				sum = 0;
+				count = 0;
+			}
+		}
+		
+		
 		if(name == null)
 			name = reader_id;
         
         setMask(data.values,name);
-        var masterSeries ={ data: data.values, name: name, color: highchartsOptions.colors[masterChart.series.length] };
+        var masterSeries ={ data: masterData, name: name, color: highchartsOptions.colors[masterChart.series.length] };
       	masterChart.addSeries(masterSeries);
         masterChart.redraw();
-        load_data_detail(min,max,name);
+        
+        load_data_detail(detailData[0][0],detailData[detailData.length-1][0],name);
     });
     
 }
@@ -77,9 +108,14 @@ function load_data_detail(min,max,name)
 		$.get(dataUrl+"/"+reader_id+"/"+min+"/"+max+"/1", function(resp) {
 			var data = eval("("+resp+")");
 			detailData =new Array();
-
+			var lastValue = 0;
+			var lastTime = 0;
         	jQuery.each(data.values, function(i, value) {
-            	detailData.push(new Array((data.first+data.values[i][0])*1000,data.values[i][1]));
+        		var t = lastTime+data.values[i][0];
+        		var v = lastValue+data.values[i][1];
+            	detailData.push(new Array(t*1000,v));
+        		lastTime = t;
+        		lastValue = v;
         	});
         	
         	draw_detail_data(min,max,name);
@@ -94,9 +130,18 @@ function load_data_detail(min,max,name)
      		url:   dataUrl+"/"+reader_id+"/"+min+"/"+detailData[0][0]+"/1",
      		success: function(resp) {
 				var data = eval("("+resp+")");
+        		var lastValue = 0;
+				var lastTime = 0;
         		jQuery.each(data.values, function(i, value) {
-            		data.values[i][0]= (data.first+data.values[i][0])* 1000;
+        			var t = lastTime + data.values[i][0];
+        			var v = lastValue+data.values[i][1];
+
+        			data.values[i][0] = t*1000;
+        			data.values[i][1] =  v;
+            		lastTime = t;
+        			lastValue = v;
         		});
+        		
         		detailData = data.concat(detailData);
 				draw_detail_data(min,max,name);
 			},
@@ -111,8 +156,15 @@ function load_data_detail(min,max,name)
      		url:   dataUrl+"/"+reader_id+"/"+detailData[detailData.length - 1][0]+"/"+max+"/1",
      		success: function(resp) {
 				var data = eval("("+resp+")");
+        		var lastValue = 0;
+				var lastTime = 0;
         		jQuery.each(data.values, function(i, value) {
-            		data.values[i][0]= (data.first+data.values[i][0])* 1000;
+        			var t = lastTime + data.values[i][0];
+        			var v = lastValue+data.values[i][1];
+        			data.values[i][0] = t*1000;
+        			data.values[i][1] = v;
+            		lastTime = t;
+        			lastValue = v;
         		});
         		detailData = detailData.concat(data);
 				draw_detail_data(min,max,name);
@@ -132,7 +184,7 @@ function draw_detail_data(min,max,name)
 		var last = 0;
 		var sum = 0;
 		var count = 0;
-		for(i = 0; i <= detailData.length;i++)
+		for(i = 0; i < detailData.length;i++)
 		{
 			if(detailData[i][0] >= min){
 				count++;
@@ -209,14 +261,8 @@ function setMask(values,sname)
     		maskMax = values[values.length -1][0];
     	}
     	
-    	if(min > values[0][0])
-        	min = values[0][0];
-
-    	if(max < values[values.length -1][0])
-       		max = values[values.length -1 ][0];
-       		
-     if((max - min) > 3600*24*7*1000)
-   		min = max - 3600*24*7*1000;
+        min = values[0][0];
+       	max = values[values.length -1 ][0];
 }
 
 function drawMask()
