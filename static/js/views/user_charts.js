@@ -1,29 +1,37 @@
 
 Highcharts.theme = {};// prevent errors in default theme
-var highchartsOptions = Highcharts.getOptions();
+Highcharts.setOptions({
+	global: {
+		useUTC: false
+	 }
+});
 
-var dataUrl = base_url+"/series/reader/";
+var highchartsOptions = Highcharts.getOptions();
+var detailData = null;
+
+var dataUrl = base_url+"/series/reader";
 var maskMin = 0;
 var maskMax = 0;
-var min = 0;
-var max = 0;
-var time = 3600*24;
+var currentTime = new Date();
+var min = currentTime.getTime() - 3600*24*1000;
+var max = currentTime.getTime();
 
-var masterChart,detailChart;
+var masterChart;
+var detailChart;
 
 $(document).ready(function() {
 	var $container = $('#container').css('position', 'relative');
 	var $detailContainer = $('<div id="detail-container">').appendTo($container);
 	var $masterContainer = $('<div id="master-container">').css({ position: 'absolute', top: 510, height: 80, width: '100%' }).appendTo($container);
 	createMaster();
-	load_data(time);
+	load_data(min,max);
 });
 
 function  deviceSelectEvent(sender)
 {
 	if(sender.checked == false){
 		reader_id = sender.value;
-		load_data(time,sender.value);
+		load_data(min,max,sender.value);
 	}else{
    		jQuery.each(masterChart.series, function(i, series) {
         		if(series.name == sender.value)
@@ -37,43 +45,161 @@ function  deviceSelectEvent(sender)
 	}
 }
 
-function load_data(ts,name)
-{
-    $.get(dataUrl+"/"+reader_id+"/"+ts, function(resp) {
+function load_data(min,max,name)
+{      
+     
+    $.get(dataUrl+"/"+reader_id+"/"+min+"/"+max, function(resp) {
         var data = eval("("+resp+")");
         jQuery.each(data.values, function(i, value) {
-            data.values[i][0] = data.values[i][0] * 1000;
+            data.values[i][0] = (data.first+data.values[i][0]) * 1000;
         });
-	if(name == null)
-		name = reader_id;
-        addSeries(data.values,name);
-        drawMask();
+        
+		if(name == null)
+			name = reader_id;
+        
+        setMask(data.values,name);
+        var masterSeries ={ data: data.values, name: name, color: highchartsOptions.colors[masterChart.series.length] };
+      	masterChart.addSeries(masterSeries);
         masterChart.redraw();
-        detailChart.redraw();
-
+        load_data_detail(min,max,name);
     });
+    
+}
+
+function load_data_detail(min,max,name)
+{	
+   	jQuery.each(detailChart.series, function(i, series) {
+    	series.remove(true);
+	})
+		
+	if(detailData ==  null)
+	{
+		$.get(dataUrl+"/"+reader_id+"/"+min+"/"+max+"/1", function(resp) {
+			var data = eval("("+resp+")");
+			detailData =new Array();
+
+        	jQuery.each(data.values, function(i, value) {
+            	detailData.push(new Array((data.first+data.values[i][0])*1000,data.values[i][1]));
+        	});
+        	
+        	draw_detail_data(min,max,name);
+		});
+		return;
+	}
+	
+	//Load missing left values
+	if( detailData[0][0] > min)
+	{
+		jQuery.ajax({
+     		url:   dataUrl+"/"+reader_id+"/"+min+"/"+detailData[0][0]+"/1",
+     		success: function(resp) {
+				var data = eval("("+resp+")");
+        		jQuery.each(data.values, function(i, value) {
+            		data.values[i][0]= (data.first+data.values[i][0])* 1000;
+        		});
+        		detailData = data.concat(detailData);
+				draw_detail_data(min,max,name);
+			},
+	        async:   false
+		});
+	}
+
+	//Load missing right values
+	if( detailData[detailData.length - 1][0] < max)
+	{
+		jQuery.ajax({
+     		url:   dataUrl+"/"+reader_id+"/"+detailData[detailData.length - 1][0]+"/"+max+"/1",
+     		success: function(resp) {
+				var data = eval("("+resp+")");
+        		jQuery.each(data.values, function(i, value) {
+            		data.values[i][0]= (data.first+data.values[i][0])* 1000;
+        		});
+        		detailData = detailData.concat(data);
+				draw_detail_data(min,max,name);
+			},
+	        async:   false
+		});
+	}
+	
+	draw_detail_data(min,max,name);
+}
+
+
+function draw_detail_data(min,max,name)
+{		
+		var data = new Array();
+		var interval = (max - min) / 150;
+		var last = 0;
+		var sum = 0;
+		var count = 0;
+		for(i = 0; i <= detailData.length;i++)
+		{
+			if(detailData[i][0] >= min){
+				count++;
+				sum += detailData[i][1];
+				
+				if(last + interval < detailData[i][0])
+				{
+					data.push(new Array(detailData[i][0],sum / count));
+					last = detailData[i][0];
+					sum = 0;
+					count = 0;
+				}
+			}
+			if(detailData[i][0] >= max	)
+				break;
+		}
+		
+		
+		var detailSeries ={ data: data, name: name, color: highchartsOptions.colors[masterChart.series.length] };
+        detailChart.addSeries(detailSeries);
+        
+        draw_plot_lines(detailChart);
+        detailChart.redraw();
+}
+
+function draw_plot_lines(chart)
+{
+ //Draw Vertical Lines
+        var extremes = chart.xAxis[0].getExtremes();
+ 		var day = new Date(14*3600*1000).getTime();
+		var minDate = new Date(extremes.min+day);
+		var maxDate = new Date(extremes.max);
+		var i = new Date();
+		for(i=minDate;i<maxDate;i = new Date(i.getTime() + day))
+		{
+			var x = new Date(i.getFullYear(),i.getMonth(),i.getDate()).getTime();
+			var lbl = {
+	  			text: new Date(x).toDateString(),
+		  		rotation: -90,
+		  		align: 'center',
+				y: 55,
+				x: -5
+			};
+			detailChart.xAxis[0].addPlotLine({'value': x, 'color': 'gray', id:'plot-line-'+i,width:2, dashStyle: "ShortDot", label: lbl, zIndex: 1});
+		}
 }
 
 function reload_chart(ts)
 {
-	time = ts;
 	maskMin = 0;
 	maskMax = 0;
-	min = 0;
-	max = 0;
+	min = currentTime.getTime() - ts*1000;
+	max = currentTime.getTime();
+	detailData = null;
+	
    	jQuery.each(masterChart.series, function(i, series) {
         	series.remove(false);
 	});
         jQuery.each(detailChart.series, function(i, series) {
         	series.remove(false);
 	});
-	load_data(ts,null);
+	
+	load_data(min,max,null);
 }
 
-function addSeries(values,sname)
+function setMask(values,sname)
 {
-	if(values.length > 0)
-	{
     	if(maskMin == 0)
 		{
     		maskMin = values[0][0];
@@ -82,23 +208,21 @@ function addSeries(values,sname)
     	{
     		maskMax = values[values.length -1][0];
     	}
-
+    	
     	if(min > values[0][0])
         	min = values[0][0];
 
     	if(max < values[values.length -1][0])
        		max = values[values.length -1 ][0];
-	}
-	var masterSeries ={ data: values, name: sname, color: highchartsOptions.colors[masterChart.series.length] };
-    var detailSeries ={ data: "", name: sname, color: highchartsOptions.colors[masterChart.series.length] };
-    masterChart.addSeries(masterSeries,false);
-    detailChart.addSeries(detailSeries,false);
+       		
+     if((max - min) > 3600*24*7*1000)
+   		min = max - 3600*24*7*1000;
 }
 
 function drawMask()
 {
 	var xAxis = masterChart.xAxis[0];
-	var detailData = [];
+	//var detailData = [];
 	xAxis.removePlotBand('mask-before');
 	xAxis.addPlotBand({
 		id: 'mask-before',
@@ -114,40 +238,8 @@ function drawMask()
 		to: max,
 		color: Highcharts.theme.maskColor || 'rgba(0, 0, 0, 0.2)'
 	});
-
-	var sz = detailChart.series.length;
-	var i = 0;
-	for(i=0;i<sz;i++){
-		detailData.push([]);
-		jQuery.each(masterChart.series[i].data, function(j, point) {
-			if (point.x > maskMin && point.x < maskMax) {
-				detailData[i].push({
-				x: point.x,
-				y: point.y
-				});
-			}
-		});
-		detailChart.series[i].setData(detailData[i]);
-	}
-
-	var extremes = detailChart.xAxis[0].getExtremes();
- 	var day = new Date(14*3600*1000).getTime();
-	var minDate = new Date(extremes.min+day);
-	var maxDate = new Date(extremes.max);
-	var i = new Date();
-	for(i=minDate;i<maxDate;i = new Date(i.getTime() + day))
-	{
-		var x = new Date(i.getFullYear(),i.getMonth(),i.getDate()).getTime();
-		var lbl = {
-	  		text: new Date(x).toDateString(),
-		  	rotation: -90,
-		  	align: 'center',
-			y: 55,
-			x: -5
-		};
-		detailChart.xAxis[0].addPlotLine({'value': x, 'color': 'gray', id:'plot-line-'+i,width:2, dashStyle: "ShortDot", label: lbl, zIndex: 1});
-	}
-
+	
+	load_data_detail(maskMin,maskMax,null);
 }
 
 function createMaster()
@@ -241,6 +333,7 @@ function createMaster()
 	 chart: {
 		marginBottom: 20,
 		renderTo: 'detail-container',
+		         defaultSeriesType: 'spline',
 		reflow: false,
 		marginLeft: 50,
 		height: 500,
