@@ -8,6 +8,7 @@ Highcharts.setOptions({
 
 var highchartsOptions = Highcharts.getOptions();
 var detailData = null;
+var masterChart = null;
 
 var dataUrl = base_url+"/series/reader";
 var maskMin = 0;
@@ -16,8 +17,6 @@ var currentTime = new Date();
 var min = currentTime.getTime() - 3600*24*1000;
 var max = currentTime.getTime();
 
-var masterChart;
-var detailChart;
 
 $(document).ready(function() {
 	var $container = $('#container').css('position', 'relative');
