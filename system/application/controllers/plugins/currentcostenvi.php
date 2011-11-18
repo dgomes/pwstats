@@ -1,17 +1,18 @@
 <?php
-class CurrentCostENVI extends Controller {
+class CurrentCostENVI extends CI_Controller {
 
-    function CurrentCostENVI()
+    function __construct()
     {
-        parent::Controller();
+        parent::__construct();
+
         $this->load->helper('url');
     }
 
     function insert($reader_id, $key, $timestamp, $type, $measure)
     {
         $query = $this->db->query("SELECT r.id FROM readers r " .
-                                  "INNER JOIN users u ON u.id = r.user_id " .
-                                  "WHERE r.id = ? AND r.key = ?", array($reader_id, $key));
+                "INNER JOIN users u ON u.id = r.user_id " .
+                "WHERE r.id = ? AND r.key = ?", array($reader_id, $key));
         $n = -1;
         if ($query->num_rows() > 0)
         {
