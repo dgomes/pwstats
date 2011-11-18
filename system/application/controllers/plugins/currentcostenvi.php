@@ -23,11 +23,13 @@ class CurrentCostENVI extends CI_Controller {
 
             if (array_key_exists($type, $types))
             {
-                $this->db->set('readers_id', (int) $reader_id);
+                $query = $this->db->query("INSERT INTO entries (readers_id, entry, entries_types_id, unit_timestamp) " .
+                                            "VALUES (?, ?, ?, FROM_UNIXTIME(?))", array($reader_id, $measure, $types[$type], $timestamp));
+                /*$this->db->set('readers_id', (int) $reader_id);
                 $this->db->set('entry', (int) $measure);
                 $this->db->set('entries_types_id', $types[$type]);
                 $this->db->set('unit_timestamp', date('Y-m-d H:i:s', $timestamp));
-                $this->db->insert('entries');
+                $this->db->insert('entries');*/
 
                 $n = $this->db->affected_rows();
             }
